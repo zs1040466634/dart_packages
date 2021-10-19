@@ -80,24 +80,24 @@ class SignInWithApple {
   ///
   /// Throws an [SignInWithAppleNotSupportedException] in case Sign in with Apple is not available (e.g. iOS < 13, macOS < 10.15)
   static Future<AuthorizationCredentialAppleID> getAppleIDCredential({
-    required List<AppleIDAuthorizationScopes> scopes,
+    @required List<AppleIDAuthorizationScopes> scopes,
 
     /// Optional parameters for web-based authentication flows on non-Apple platforms
     ///
     /// This parameter is required on Android.
-    WebAuthenticationOptions? webAuthenticationOptions,
+    WebAuthenticationOptions webAuthenticationOptions,
 
     /// Optional string which, if set, will be be embedded in the resulting `identityToken` field on the [AuthorizationCredentialAppleID].
     ///
     /// This can be used to mitigate replay attacks by using a unique argument per sign-in attempt.
     ///
     /// Can be `null`, in which case no nonce will be passed to the request.
-    String? nonce,
+    String nonce,
 
     /// Data that’s returned to you unmodified in the corresponding [AuthorizationCredentialAppleID.state] after a successful authentication.
     ///
     /// Can be `null`, in which case no state will be passed to the request.
-    String? state,
+    String state,
   }) async {
     if (Platform.isAndroid) {
       if (webAuthenticationOptions == null) {
@@ -194,10 +194,10 @@ class SignInWithApple {
   }
 
   static Future<AuthorizationCredentialAppleID> _signInWithAppleAndroid({
-    required List<AppleIDAuthorizationScopes> scopes,
-    required WebAuthenticationOptions webAuthenticationOptions,
-    required String? nonce,
-    required String? state,
+    @required List<AppleIDAuthorizationScopes> scopes,
+    @required WebAuthenticationOptions webAuthenticationOptions,
+    @required String nonce,
+    @required String state,
   }) async {
     assert(Platform.isAndroid);
 

@@ -10,8 +10,8 @@ const _appleIconSizeScale = 28 / 44;
 /// https://developer.apple.com/design/human-interface-guidelines/sign-in-with-apple/overview/buttons/
 class SignInWithAppleButton extends StatelessWidget {
   const SignInWithAppleButton({
-    Key? key,
-    required this.onPressed,
+    Key key,
+    @required this.onPressed,
     this.text = 'Sign in with Apple',
     this.height = 44,
     this.style = SignInWithAppleButtonStyle.black,
@@ -76,7 +76,7 @@ class SignInWithAppleButton extends StatelessWidget {
   /// The decoration which should be applied to the inner container inside the button
   ///
   /// This allows to customize the border of the button
-  Decoration? get _decoration {
+  Decoration get _decoration {
     switch (style) {
       case SignInWithAppleButtonStyle.black:
       case SignInWithAppleButtonStyle.white:

@@ -68,7 +68,7 @@ abstract class SignInWithAppleException implements Exception {
 class UnknownSignInWithAppleException extends PlatformException
     implements SignInWithAppleException {
   UnknownSignInWithAppleException({
-    required PlatformException platformException,
+    @required PlatformException platformException,
   }) : super(
           code: platformException.code,
           message: platformException.message,
@@ -83,7 +83,7 @@ class UnknownSignInWithAppleException extends PlatformException
 /// An [SignInWithAppleException] which will be thrown in case Sign in with Apple is not supported.
 class SignInWithAppleNotSupportedException implements SignInWithAppleException {
   const SignInWithAppleNotSupportedException({
-    required this.message,
+    @required this.message,
   });
 
   /// A message specifying more details about why Sign in with Apple is not supported
@@ -122,8 +122,8 @@ enum AuthorizationErrorCode {
 class SignInWithAppleAuthorizationException
     implements SignInWithAppleException {
   const SignInWithAppleAuthorizationException({
-    required this.code,
-    required this.message,
+    @required this.code,
+    @required this.message,
   });
 
   /// A more exact code of what actually went wrong
@@ -138,7 +138,7 @@ class SignInWithAppleAuthorizationException
 
 class SignInWithAppleCredentialsException implements SignInWithAppleException {
   const SignInWithAppleCredentialsException({
-    required this.message,
+    @required this.message,
   });
 
   /// The localized error message from the native code.

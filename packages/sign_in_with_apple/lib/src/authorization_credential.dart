@@ -21,7 +21,7 @@ class AuthorizationCredentialAppleID {
     @required this.userIdentifier,
     @required this.givenName,
     @required this.familyName,
-    required this.authorizationCode,
+    @required this.authorizationCode,
     @required this.email,
     @required this.identityToken,
     @required this.state,
@@ -31,7 +31,7 @@ class AuthorizationCredentialAppleID {
   ///
   /// This will always be provided on iOS and macOS systems. On Android, however, this will not be present.
   /// This will stay the same between sign ins, until the user deauthorizes your App.
-  final String? userIdentifier;
+  final String userIdentifier;
 
   /// The users given name, in case it was requested.
   /// You will need to provide the [AppleIDAuthorizationScopes.fullName] scope to the [AppleIDAuthorizationRequest] for requesting this information.
@@ -40,7 +40,7 @@ class AuthorizationCredentialAppleID {
   /// Upon further authorizations, you will only get the [userIdentifier],
   /// meaning you will need to store this data securely on your servers.
   /// For more information see: https://forums.developer.apple.com/thread/121496
-  final String? givenName;
+  final String givenName;
 
   /// The users family name, in case it was requested.
   /// You will need to provide the [AppleIDAuthorizationScopes.fullName] scope to the [AppleIDAuthorizationRequest] for requesting this information.
@@ -49,7 +49,7 @@ class AuthorizationCredentialAppleID {
   /// Upon further authorizations, you will only get the [userIdentifier],
   /// meaning you will need to store this data securely on your servers.
   /// For more information see: https://forums.developer.apple.com/thread/121496
-  final String? familyName;
+  final String familyName;
 
   /// The users email in case it was requested.
   /// You will need to provide the [AppleIDAuthorizationScopes.email] scope to the [AppleIDAuthorizationRequest] for requesting this information.
@@ -58,7 +58,7 @@ class AuthorizationCredentialAppleID {
   /// Upon further authorizations, you will only get the [userIdentifier],
   /// meaning you will need to store this data securely on your servers.
   /// For more information see: https://forums.developer.apple.com/thread/121496
-  final String? email;
+  final String email;
 
   /// The verification code for the current authorization.
   ///
@@ -66,12 +66,12 @@ class AuthorizationCredentialAppleID {
   final String authorizationCode;
 
   /// A JSON Web Token (JWT) that securely communicates information about the user to your app.
-  final String? identityToken;
+  final String identityToken;
 
   /// The `state` parameter that was passed to the request.
   ///
   /// This data is not modified by Apple.
-  final String? state;
+  final String state;
 
   @override
   String toString() {
@@ -83,8 +83,8 @@ class AuthorizationCredentialAppleID {
 class AuthorizationCredentialPassword {
   /// Creates a new username/password combination, which is the result of a successful Keychain query.
   const AuthorizationCredentialPassword({
-    required this.username,
-    required this.password,
+    @required this.username,
+    @required this.password,
   });
 
   /// The username for the credential
@@ -104,7 +104,7 @@ AuthorizationCredentialAppleID parseAuthorizationCredentialAppleID(
   Map<dynamic, dynamic> response,
 ) {
   if (response['type'] == 'appleid') {
-    final authorizationCode = response['authorizationCode'] as String?;
+    final authorizationCode = response['authorizationCode'] as String;
 
     if (authorizationCode == null) {
       throw const SignInWithAppleAuthorizationException(
@@ -115,13 +115,13 @@ AuthorizationCredentialAppleID parseAuthorizationCredentialAppleID(
     }
 
     return AuthorizationCredentialAppleID(
-      userIdentifier: response['userIdentifier'] as String?,
-      givenName: response['givenName'] as String?,
-      familyName: response['familyName'] as String?,
-      email: response['email'] as String?,
+      userIdentifier: response['userIdentifier'] as String,
+      givenName: response['givenName'] as String,
+      familyName: response['familyName'] as String,
+      email: response['email'] as String,
       authorizationCode: authorizationCode,
-      identityToken: response['identityToken'] as String?,
-      state: response['state'] as String?,
+      identityToken: response['identityToken'] as String,
+      state: response['state'] as String,
     );
   } else {
     throw Exception('Unsupported result type ${response['type']}');
@@ -163,7 +163,7 @@ AuthorizationCredentialAppleID parseAuthorizationCredentialAppleIDFromDeeplink(
       ? json.decode(deeplink.queryParameters['user'] as String)
           as Map<String, dynamic>
       : null;
-  final name = user != null ? user['name'] as Map<String, dynamic>? : null;
+  final name = user != null ? user['name'] as Map<String, dynamic> : null;
 
   final authorizationCode = deeplink.queryParameters['code'];
   if (authorizationCode == null) {
@@ -176,9 +176,9 @@ AuthorizationCredentialAppleID parseAuthorizationCredentialAppleIDFromDeeplink(
 
   return AuthorizationCredentialAppleID(
     authorizationCode: authorizationCode,
-    email: user?['email'] as String?,
-    givenName: name?['firstName'] as String?,
-    familyName: name?['lastName'] as String?,
+    email: user['email'] as String,
+    givenName: name['firstName'] as String,
+    familyName: name['lastName'] as String,
     userIdentifier: null,
     identityToken: deeplink.queryParameters['id_token'],
     state: deeplink.queryParameters['state'],
